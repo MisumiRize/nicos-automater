@@ -1,4 +1,4 @@
-import {By} from 'selenium-webdriver'
+import {By, until} from 'selenium-webdriver'
 
 import UserPage from './UserPage'
 
@@ -16,15 +16,14 @@ export default class LoginPage {
     await password.sendKeys(process.env.MUFG_PASSWORD)
     const submit = await this._driver.findElement(By.name('submit1'))
     await submit.click()
-    await this._driver.wait(() => {
-      return this._driver.isElementPresent(By.name('submit'))
-    })
+    await this._driver.wait(until.elementLocated(By.name('submit')))
     const auth = await this._driver.findElement(By.id('addAuthSelect2'))
     await auth.click()
     const birthday = await this._driver.findElement(By.name('webBirthDay'))
     await birthday.sendKeys(process.env.BIRTHDAY)
     const login = await this._driver.findElement(By.name('submit'))
     await login.click()
+    await this._driver.wait(until.elementLocated(By.className('loginmenu')), 10000)
     return new UserPage(this._driver)
   }
 }

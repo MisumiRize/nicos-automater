@@ -1,4 +1,4 @@
-import {By} from 'selenium-webdriver'
+import {By, until} from 'selenium-webdriver'
 
 
 export const NEXT_MONTH = 'oNEXT_MONTH'
@@ -14,6 +14,7 @@ export default class SpecificationPage {
     const nav = await this._driver.findElement(By.className('tab-nav-meisai'))
     const specification = await this._driver.findElement(By.name(month))
     await specification.click()
+    await this._driver.wait(until.elementLocated({name: month, className: 'active'}), 10000)
     return new SpecificationPage(this._driver)
   }
 
