@@ -13,10 +13,11 @@ export default async function app() {
   let p = await new LoginPage(driver).login()
   p = await p.openCardsPage()
   p = await p.openSpecificationPage()
+  const thisMonth = await p.getPrice()
   p = await p.openMonthSpecificationPage(NEXT_MONTH)
   const nextMonth = await p.getPrice()
   p = await p.openMonthSpecificationPage(THE_MONTH_AFTER)
   const theMonthAfter = await p.getSum()
-  await post(nextMonth, theMonthAfter)
+  await post(thisMonth, nextMonth, theMonthAfter)
   await driver.close()
 }

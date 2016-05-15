@@ -25,8 +25,13 @@ export default class SpecificationPage {
   }
 
   async getSum() {
-    const el = await this._driver.findElement(By.css('.sum th:nth-child(2)'))
-    const text = await el.getText()
-    return parseInt(text.replace('円', '').replace(/,/g, ''))
+    const selector = By.css('.sum th:nth-child(2)')
+    const present = await this._driver.isElementPresent(selector)
+    if (present) {
+      const el = await this._driver.findElement(selector)
+      const text = await el.getText()
+      return parseInt(text.replace('円', '').replace(/,/g, ''))
+    }
+    return 0
   }
 }

@@ -1,11 +1,16 @@
 import axios from 'axios'
 
 
-export async function post(nextMonth, theMonthAfter) {
+export async function post(thisMonth, nextMonth, theMonthAfter) {
   const time = Math.floor(new Date().getTime() / 1000)
   const service = process.env.MACKEREL_SERVICE_NAME
   await axios.post(`https://mackerel.io/api/v0/services/${service}/tsdb`,
     [
+      {
+        name: 'ThisMonth',
+        time: time,
+        value: thisMonth
+      },
       {
         name: 'NextMonth',
         time: time,
